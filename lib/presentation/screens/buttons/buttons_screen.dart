@@ -13,7 +13,7 @@ class ButtonsScreen extends StatelessWidget {
       ),
       body: const _ButtonsView(),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.arrow_back_ios_new_rounded),
+        child: const Icon(Icons.arrow_back_ios_new_rounded),
         onPressed: () {
           //usando gorouter
           context.pop();
