@@ -55,12 +55,48 @@ class _ButtonsView extends StatelessWidget {
               style: ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(colors.primary),
                 iconColor: const MaterialStatePropertyAll(Colors.white),
-            ),)
+            ),),
             //Todo:CurstomButton
           
+          const CustomButton(),
           ],
         ),
       ),
     );
   }
 }
+
+class CustomButton extends StatelessWidget {
+  const CustomButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Obtener la paleta de colores del tema actual.
+    final colors = Theme.of(context).colorScheme;
+
+    return ClipRRect(
+      // Aplicar un borde redondeado alrededor del botón.
+      borderRadius: BorderRadius.circular(20),
+      child: Material(
+        // Establecer el color de fondo del Material del botón.
+        color: colors.primary,
+        child: InkWell(
+          onTap: () {
+            // Lógica que se ejecuta cuando se toca el botón.
+          },
+          child: const Padding(
+            // Agregar un relleno horizontal y vertical alrededor del texto.
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            child: Text(
+              'Hola Mundo',
+              style: TextStyle(
+                color: Colors.white, // Establecer el color del texto.
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
