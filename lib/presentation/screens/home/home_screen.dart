@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:widgets_app/config/theme/menu/menu_items.dart';
 
+
 class HomeScreen extends StatelessWidget {
+  static const String name = 'home_screen';
   const HomeScreen({super.key});
 
   @override
@@ -53,6 +55,7 @@ class _ListTileCustom extends StatelessWidget {
       subtitle: Text(menuItem.subtittle), // Agregamos el subtítulo aquí.
       onTap: () {
         //navegar con go_router
+        //context.pushNamed(CardsScreen.name);
         context.push(menuItem.link);
       },
     );
