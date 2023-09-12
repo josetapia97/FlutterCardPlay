@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widgets_app/config/theme/menu/menu_items.dart';
+import 'package:widgets_app/presentation/screens/home/buttons/buttons_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,7 +11,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Flutter + material 3'),
       ),
-      body: const _HomeView() ,
+      body: const _HomeView(),
     );
   }
 }
@@ -39,16 +40,26 @@ class _ListTileCustom extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final colors = Theme.of(context).colorScheme;
 
     return ListTile(
-      leading: Icon(menuItem.icon, color: colors.primary), // Puedes agregar un ícono si lo deseas.
-      trailing: Icon(Icons.arrow_forward_ios_rounded, color:colors.primary,),
+      leading: Icon(menuItem.icon,
+          color: colors.primary), // Puedes agregar un ícono si lo deseas.
+      trailing: Icon(
+        Icons.arrow_forward_ios_rounded,
+        color: colors.primary,
+      ),
       title: Text(menuItem.tittle),
       subtitle: Text(menuItem.subtittle), // Agregamos el subtítulo aquí.
       onTap: () {
         //todo: navegar a otra pantalla
+        // Navigator.of(context).push(
+        //  MaterialPageRoute(
+        //  builder: (context) => const ButtonsScreen(),
+        //  ),
+        // );
+
+        Navigator.pushNamed(context, menuItem.link);
       },
     );
   }
