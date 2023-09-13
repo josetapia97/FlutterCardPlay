@@ -22,8 +22,14 @@ const appMenuItems = <MenuItem>[
        ),
   MenuItem(
     tittle: 'Tarjetas',
-     subtittle: 'Varias tarjetas en Flutter',
+     subtittle: 'Un contenedor estilizado',
       link: '/cards',
        icon: Icons.credit_card
+       ),
+  MenuItem(
+    tittle: 'Progress Indicators',
+     subtittle: 'Generales y controlados',
+      link: '/progress',
+       icon: Icons.refresh_rounded
        ),
 ];
