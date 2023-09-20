@@ -54,4 +54,9 @@ const appMenuItems = <MenuItem>[
       subtittle: 'Consumo de contenido y actualizacion',
       link: '/scroll',
       icon: Icons.list_alt_rounded),
+  MenuItem(
+      tittle: 'Contador Simple',
+      subtittle: 'Introduccion a Riverpod',
+      link: '/counter_screen',
+      icon: Icons.countertops),
 ];
