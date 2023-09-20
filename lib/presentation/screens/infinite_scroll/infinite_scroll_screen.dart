@@ -47,11 +47,26 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
     await Future.delayed(const Duration(seconds: 2));
     addFileImages(); // Simula cargar más imágenes
     isLoading = false;
-    if (!isMounted)
-      return; // Si el widget ya no está montado, no actualiza el estado
+    if (!isMounted) return; // Si el widget ya no está montado, no actualiza el estado
     setState(() {});
 
     //todo: mover scroll
+  }
+
+  Future<void> onRefresh()async{
+    isLoading = true;
+    setState(() { });
+    await Future.delayed(const Duration(seconds: 3));
+    if(!isMounted)return;
+    isLoading = false;
+    final lastID=imagesIds.last;
+
+    imagesIds.clear();
+    imagesIds.add(lastID+1);
+    addFileImages();
+    setState(() {
+      
+    });
   }
 
   void addFileImages() {
@@ -68,20 +83,25 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
         context: context,
         removeTop: true,
         removeBottom: true,
-        child: ListView.builder(
-            controller: scrollController,
-            itemCount: imagesIds.length,
-            itemBuilder: (context, index) {
-              // Construye cada elemento de la ListView, que muestra imágenes
-              return FadeInImage(
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                  height: 300,
-                  placeholder:
-                      const AssetImage('assets/images/jar-loading.gif'),
-                  image: NetworkImage(
-                      'https://picsum.photos/id/${imagesIds[index]}/500/300'));
-            }),
+        child: RefreshIndicator(
+          edgeOffset: 10,
+          strokeWidth: 2,
+          onRefresh: onRefresh ,
+          child: ListView.builder(
+              controller: scrollController,
+              itemCount: imagesIds.length,
+              itemBuilder: (context, index) {
+                // Construye cada elemento de la ListView, que muestra imágenes
+                return FadeInImage(
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: 300,
+                    placeholder:
+                        const AssetImage('assets/images/jar-loading.gif'),
+                    image: NetworkImage(
+                        'https://picsum.photos/id/${imagesIds[index]}/500/300'));
+              }),
+        ),
       ),
       floatingActionButton: FloatingActionButton(
           onPressed: () => context.pop(), // Navega hacia atrás
