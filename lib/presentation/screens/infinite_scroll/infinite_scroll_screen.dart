@@ -16,7 +16,8 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
   // Controlador de desplazamiento para la ListView
   final ScrollController scrollController = ScrollController();
   bool isLoading = false; // Indica si se están cargando más imágenes
-  bool isMounted = true; // Indica si el widget está montado en el árbol de widgets
+  bool isMounted =
+      true; // Indica si el widget está montado en el árbol de widgets
 
   @override
   void initState() {
@@ -49,24 +50,37 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
     isLoading = false;
     if (!isMounted) return; // Si el widget ya no está montado, no actualiza el estado
     setState(() {});
-
-    //todo: mover scroll
+    moveScrollToBottom();
   }
 
-  Future<void> onRefresh()async{
+  void moveScrollToBottom() {
+  // Comprueba si ya estamos cerca del final del scroll.
+  if (scrollController.position.pixels + 150 <=
+      // Si estamos cerca del final, no hagas nada y sal del método.
+      scrollController.position.maxScrollExtent) return;
+    
+  
+
+  // Si no estamos cerca del final, realiza una animación para mover el scroll hacia abajo.
+    scrollController.animateTo(
+    scrollController.position.pixels + 120, // La cantidad que deseas desplazarte hacia abajo.
+    duration: const Duration(milliseconds: 300), // Duración de la animación.
+    curve: Curves.fastOutSlowIn, // La curva de aceleración de la animación.
+  );
+}
+
+  Future<void> onRefresh() async {
     isLoading = true;
-    setState(() { });
+    setState(() {});
     await Future.delayed(const Duration(seconds: 3));
-    if(!isMounted)return;
+    if (!isMounted) return;
     isLoading = false;
-    final lastID=imagesIds.last;
+    final lastID = imagesIds.last;
 
     imagesIds.clear();
-    imagesIds.add(lastID+1);
+    imagesIds.add(lastID + 1);
     addFileImages();
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   void addFileImages() {
@@ -86,7 +100,7 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
         child: RefreshIndicator(
           edgeOffset: 10,
           strokeWidth: 2,
-          onRefresh: onRefresh ,
+          onRefresh: onRefresh,
           child: ListView.builder(
               controller: scrollController,
               itemCount: imagesIds.length,
@@ -104,11 +118,12 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-          onPressed: () => context.pop(), // Navega hacia atrás
-          child: isLoading
-              ? SpinPerfect(infinite: true, child: const Icon(Icons.refresh_rounded))
-              : FadeIn(child: const Icon(Icons.arrow_back_ios_outlined)),
-        ),
+        onPressed: () => context.pop(), // Navega hacia atrás
+        child: isLoading
+            ? SpinPerfect(
+                infinite: true, child: const Icon(Icons.refresh_rounded))
+            : FadeIn(child: const Icon(Icons.arrow_back_ios_outlined)),
+      ),
     );
   }
 }
