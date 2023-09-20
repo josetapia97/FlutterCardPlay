@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class InfiniteScrollScreen extends StatefulWidget {
   static const name = 'infinite_screen';
@@ -15,27 +14,33 @@ class _InfiniteScrollScreenState extends State<InfiniteScrollScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
-      body: MediaQuery.removePadding(
-        context: context,
-        removeTop: true,
-        removeBottom: true,
-        child: ListView.builder(
-          itemCount: imagesIds.length,
-        itemBuilder: (context, index) {
-          //Fade in image: permite cargar imagenes y mostrar un placeholder
-          return FadeInImage(
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: 300,
-              placeholder: const AssetImage('assets/images/jar-loading.gif'),
-              image: NetworkImage('https://picsum.photos/id/${imagesIds[index]}/500/300'));
-        }),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            title: const Text('Scroll Infinito'),
+            floating: true, // Esto hace que el AppBar se oculte al bajar
+            snap: true, // Esto hace que el AppBar aparezca cuando se toca en cualquier lugar de la pantalla
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return FadeInImage(
+                  fit: BoxFit.cover,
+                  width: double.infinity,
+                  height: 300,
+                  placeholder: const AssetImage('assets/images/jar-loading.gif'),
+                  image: NetworkImage('https://picsum.photos/id/${imagesIds[index]}/500/300'),
+                );
+              },
+              childCount: imagesIds.length,
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: ()=> context.pop(),
+        onPressed: () => Navigator.of(context).pop(),
         child: const Icon(Icons.arrow_back_ios_outlined),
-        ),
+      ),
     );
   }
 }
