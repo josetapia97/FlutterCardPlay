@@ -59,4 +59,9 @@ const appMenuItems = <MenuItem>[
       subtittle: 'Introduccion a Riverpod',
       link: '/counter_screen',
       icon: Icons.countertops),
+  MenuItem(
+      tittle: 'Temas de la aplicacion',
+      subtittle: 'Utilizacion de Material 3 y Riverpod',
+      link: '/themechanger',
+      icon: Icons.color_lens_outlined),
 ];
